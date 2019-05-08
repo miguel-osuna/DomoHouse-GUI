@@ -1,3 +1,4 @@
+'''
 import numpy as np
 import cv2
 import time
@@ -32,6 +33,49 @@ def TakeSnapshotAndSave(firstName, lastName, number):
     cap.release()
     cv2.destroyAllWindows()
     return None
+
+if __name__ == "__main__":
+    TakeSnapshotAndSave(firstName="Omar", lastName="Angulo", number=10)
+'''
+
+import numpy as np
+import cv2
+import time
+
+#import the cascade for face detection
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+
+def TakeSnapshotAndSave(firstName, lastName, number):
+    # access the webcam (every webcam has a number, the default is 0)
+    cap = cv2.VideoCapture(0)
+    capture = 1
+
+    while capture <= number:
+        # Capture frame-by-frame
+        ret, frame = cap.read()
+
+        # to detect faces in video
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+
+        for (x,y,w,h) in faces:
+            cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
+            roi_gray = gray[y:y+h, x:x+w]
+            roi_color = frame[y:y+h, x:x+w]
+
+        # if you want to convert it to gray uncomment and display gray not fame
+        #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+        crop_img = frame[y: y + h, x: x + w]  # Crop from x, y, w, h -> 100, 200, 300, 400
+        name = firstName[0] + lastName[0] + str(capture)
+        cv2.imwrite(name + ".jpg", crop_img)
+        time.sleep(5)
+        capture += 1
+
+    # When everything done, release the capture
+    cap.release()
+    cv2.destroyAllWindows()
+
 
 if __name__ == "__main__":
     TakeSnapshotAndSave(firstName="Omar", lastName="Angulo", number=10)

@@ -8,38 +8,9 @@ if sys.version_info[0] >= 3:
 else:
     import PySimpleGUI27 as sg
 
-def takeSnapshotAndSave(firstName, lastName, number):
-    # access the webcam (every webcam has a number, the default is 0)
-    cap = cv2.VideoCapture(0)
-
-    capture = 1
-    while capture <= number:
-        # Capture frame-by-frame
-        ret, frame = cap.read()
-
-        # to detect faces in video
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        faces = face_cascade.detectMultiScale(gray, 1.3, 5)
-
-        # Draw a rectangle around the faces
-        for (x, y, w, h) in faces:
-            cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
-
-        crop_img = frame[y: y + h, x: x + w]  # Crop from x, y, w, h -> 100, 200, 300, 400
-        image_name = firstName[0] + lastName[0] + str(capture)
-        cv2.imwrite("images/" + image_name + ".jpg", crop_img)
-        capture += 1
-        time.sleep(1)
-
-    # When everything done, release the capture
-    cap.release()
-    cv2.destroyAllWindows()
-    return None
-
-
 # Declaracion de variables importantes
 sg.ChangeLookAndFeel('BlueMono')
-image_logo = 'C:/Users/Miguel Osuna/OneDrive/Documentos/Trabajos/Universidad/8vo Semestre/gui/images/id.png'
+image_logo = 'C:/Users/Miguel Osuna/OneDrive/Documentos/Trabajos/Universidad/8vo Semestre/Ingeniería de Proyectos de Electrónica/DomoHouse_GUI/images/id.png'
 
 # Importar cascade para deteccion de rostros
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
@@ -147,6 +118,38 @@ layout_eliminar = [[sg.Image(filename=image_logo, size=(80, 80)),
                     sg.Button('Regresar', size=(14, 1), pad=(10, 10), font=('Roboto', 12),
                               button_color=('#4c85e0', '#FFFFFF'), auto_size_button=True, key='Regresar')]
                    ]
+
+def takeSnapshotAndSave(firstName, lastName, number):
+    # access the webcam (every webcam has a number, the default is 0)
+    cap = cv2.VideoCapture(0)
+    capture = 1
+
+    while capture <= number:
+        # Capture frame-by-frame
+        ret, frame = cap.read()
+
+        # to detect faces in video
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+
+        for (x,y,w,h) in faces:
+            cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
+            roi_gray = gray[y:y+h, x:x+w]
+            roi_color = frame[y:y+h, x:x+w]
+
+        # if you want to convert it to gray uncomment and display gray not fame
+        #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+        crop_img = frame[y: y + h, x: x + w]  # Crop from x, y, w, h -> 100, 200, 300, 400
+        name = firstName[0] + lastName[0] + str(capture)
+        cv2.imwrite("./images/" + name + ".jpg", crop_img)
+        time.sleep(1)
+        capture += 1
+
+    # When everything done, release the capture
+    # cap.release()
+    # cv2.destroyAllWindows()
+    return None
 
 # Ventana de inicializacion
 window = sg.Window('Welcome to DomoHouse', size=(480, 320), no_titlebar=True).Layout(layout_inicio)
