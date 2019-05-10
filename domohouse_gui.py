@@ -1,7 +1,6 @@
 import sys
-import cv2
-import time
-import os
+from control_commands import *
+from photo_commands import *
 
 if sys.version_info[0] >= 3:
     import PySimpleGUI as sg
@@ -10,10 +9,8 @@ else:
 
 # Declaracion de variables importantes
 sg.ChangeLookAndFeel('BlueMono')
-image_logo = 'C:/Users/Miguel Osuna/OneDrive/Documentos/Trabajos/Universidad/8vo Semestre/Ingeniería de Proyectos de Electrónica/DomoHouse_GUI/images/id.png'
-
-# Importar cascade para deteccion de rostros
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+image_logo = 'C:/Users/Miguel Osuna/OneDrive/Documentos/Trabajos/Universidad/8vo Semestre/Ingeniería de Proyectos de ' \
+             'Electrónica/DomoHouse_GUI/images/id.png'
 
 # Definicion de otras variables
 faceConfirmed = False
@@ -119,37 +116,8 @@ layout_eliminar = [[sg.Image(filename=image_logo, size=(80, 80)),
                               button_color=('#4c85e0', '#FFFFFF'), auto_size_button=True, key='Regresar')]
                    ]
 
-def takeSnapshotAndSave(firstName, lastName, number):
-    # access the webcam (every webcam has a number, the default is 0)
-    cap = cv2.VideoCapture(0)
-    capture = 1
 
-    while capture <= number:
-        # Capture frame-by-frame
-        ret, frame = cap.read()
 
-        # to detect faces in video
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        faces = face_cascade.detectMultiScale(gray, 1.3, 5)
-
-        for (x,y,w,h) in faces:
-            cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
-            roi_gray = gray[y:y+h, x:x+w]
-            roi_color = frame[y:y+h, x:x+w]
-
-        # if you want to convert it to gray uncomment and display gray not fame
-        #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-        crop_img = frame[y: y + h, x: x + w]  # Crop from x, y, w, h -> 100, 200, 300, 400
-        name = firstName[0] + lastName[0] + str(capture)
-        cv2.imwrite("./images/" + name + ".jpg", crop_img)
-        time.sleep(1)
-        capture += 1
-
-    # When everything done, release the capture
-    # cap.release()
-    # cv2.destroyAllWindows()
-    return None
 
 # Ventana de inicializacion
 window = sg.Window('Welcome to DomoHouse', size=(480, 320), no_titlebar=True).Layout(layout_inicio)
@@ -165,24 +133,20 @@ while True:
         window.Close()
         window = sg.Window('DomoHouse: Your App', size=(480, 320), no_titlebar=True).Layout(layout_login)
 
-        '''
-        if faceConfirmed == False or tagConfirmed == False:
-            window.FindElement('TagConfirmed').Update('Presione el botón')
-            window.FindElement('FaceConfirmed').Update('Presione el botón')
-        '''
-
     # Boton para confirmar FaceID del usuario
     if event == 'FaceID':
         # Desplegar ventana de Popup
         if sg.PopupYesNo('¿Desea tomar la foto?', text_color="white", font=('Roboto', 20),
                          button_color=('#4c85e0', '#FFFFFF'), keep_on_top=True, no_titlebar=True) == 'Yes':
-            # Confirmar Face ID
-
-            # Agregar algoritmo de comparacion
-            # Crear una funcion de comparacion
-
-            # El nombre sera cambiado por el programa de reconocimiento facial, de acuerdo a la base de datos
-            name = 'Miguel'
+            # Se toma la foto para comparacion
+            takeSnapshotAndSave(1)
+            # Se cargan las imagenes de la base de datos
+            images = loadAllImages()
+            # Todas se escalan al mismo tamano
+            images = resizeImages(images)
+            # Se aplica el filtro para saber la de mayor similitud
+            name = applyFilter(images)
+            # Se actualiza la ventana
             window.FindElement('FaceConfirmed').Update('Face ID verificado')
             faceConfirmed = True
 
@@ -194,6 +158,7 @@ while True:
             # Confirmar Tag ID
 
             # Agregar algoritmo de comparacion
+
             # Crear una funcion de comparacion
 
             window.FindElement('TagConfirmed').Update('Tag ID verificado')
@@ -214,9 +179,9 @@ while True:
                  button_color=('#4c85e0', '#FFFFFF'), keep_on_top=True, no_titlebar=True)
         menuDisplayed = True
 
+    # Botón para encender y apagar todos los actuadores
     if event == 'OnOff':
-        # Manda al MCU el primer caracter del nombre del usuario
-        print(name[0])
+        # Manda al MCU los numeros registrados bajo la incial del usuario
         cntr += 1
 
         # Para "Off", el valor del contador es par, y para "On", el valor del contador es impar
@@ -224,10 +189,14 @@ while True:
         if cntr % 2 == 0:
             sg.Popup('Sistema apagado', text_color="white", font=('Roboto', 20), button_color=('#4c85e0', '#FFFFFF'),
                      keep_on_top=True, no_titlebar=True)
+            print("Turn off everything")
+            # apaga_todo()
 
         if cntr % 2 != 0:
             sg.Popup('Sistema encendido', text_color="white", font=('Roboto', 20), button_color=('#4c85e0', '#FFFFFF'),
                      keep_on_top=True, no_titlebar=True)
+            print("Turn on everything")
+            userOptions(name)
 
     if event == 'Finalizar':
         # Devuelve el valor de las variables a su estado original
@@ -241,17 +210,14 @@ while True:
 
         # Para asegurar de apagar el equipo por completo, se apaga al momento de finalizar la sesion
         if cntr % 2 != 0:
-            # Se manda la primera incinial del usuario
-            print(name[0])
+            # apaga_todo()
             cnt = 0
-            print(cnt)
 
     if event == 'Agregar':
         window.Close()
         window = sg.Window('DomoHouse: Your App', size=(480, 320), no_titlebar=True).Layout(layout_agregar)
 
-    # Cada que se presione el boton de "Tomar Foto",
-    # se capturara una imagen del rostro del usuario, para asi poder almacenarla
+    # Cada que se presione el boton de "Tomar Foto" se capturan 10 fotos del usuario
     if event == 'TomarFoto':
         '''
         Cuando se capture la imagen, se almacenara mediante el uso de las iniciales del nombre y apellido del usuario,
@@ -271,15 +237,15 @@ while True:
                                            button_color=('#4c85e0', '#FFFFFF'), keep_on_top=True,
                                            no_titlebar=True) == 'Yes':
             # Codigo para tomar la foto y almacenarla
-            # Se obtiene el nombre y el apellido de las entradas de texto,
-            # y despues se utiliza solamente la primer letra de cada uno
+
+            # Se obtiene el nombre y el apellido de las entradas de texto
             firstName = window.FindElement('photoFirstName').Get()
             lastName = window.FindElement('photoLastName').Get()
 
             sg.PopupQuickMessage("Espere mientras se toman las fotos", text_color="black", font=('Roboto', 20),
                           button_color=('#4c85e0', '#FFFFFF'), keep_on_top=True, no_titlebar=True)
 
-            takeSnapshotAndSave(firstName, lastName, 10)
+            takeSnapshotAndSave(10, firstName, lastName)
             window.FindElement('Fotos').Update('Progreso: #10 de 10')
             photoNum = 10
 
@@ -303,15 +269,13 @@ while True:
 
         if sg.PopupYesNo('¿Seguro que quiere eliminar las fotos?', text_color="white", font=('Roboto', 20),
                          button_color=('#4c85e0', '#FFFFFF'), keep_on_top=True, no_titlebar=True) == 'Yes':
-            # Agregar algoritmo para borrar archivos de una carpeta
-            for num in range(1, 11):
-                if os.path.exists("images" + '/' + firstName[0] + lastName[0] + str(num) + ".jpg"):
-                    os.remove("images" + '/' + firstName[0] + lastName[0] + str(num) + ".jpg")
-                else:
-                    sg.PopupQuickMessage("Usuario no existente", text_color="black", font=('Roboto', 20),
-                                         button_color=('#4c85e0', '#FFFFFF'), keep_on_top=True, no_titlebar=True)
-            time.sleep(3)
-            sg.Popup('Imágenes eliminadas', text_color="white", font=('Roboto', 20),
-                     button_color=('#4c85e0', '#FFFFFF'), keep_on_top=True, no_titlebar=True)
 
-# window.Close()
+            # Funcion para borrar todas las imagenes de la carpeta
+            photosDetected = deleteAllPhothos(firstName, lastName)
+
+            if photosDetected is True:
+                sg.Popup('Imágenes eliminadas', text_color="white", font=('Roboto', 20),
+                         button_color=('#4c85e0', '#FFFFFF'), keep_on_top=True, no_titlebar=True)
+            else:
+                sg.PopupQuickMessage("Usuario no existente", text_color="black", font=('Roboto', 20),
+                                     button_color=('#4c85e0', '#FFFFFF'), keep_on_top=True, no_titlebar=True)
