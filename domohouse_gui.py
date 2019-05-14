@@ -9,6 +9,7 @@ else:
 
 # Declaracion de variables importantes
 sg.ChangeLookAndFeel('BlueMono')
+#Change file path
 image_logo = 'C:/Users/Miguel Osuna/OneDrive/Documentos/Trabajos/Universidad/8vo Semestre/Ingeniería de Proyectos de ' \
              'Electrónica/DomoHouse_GUI/images/id.png'
 
@@ -215,7 +216,7 @@ while True:
 
     if event == 'Agregar':
         window.Close()
-        window = sg.Window('DomoHouse: Your App', size=(480, 320), no_titlebar=True).Layout(layout_agregar)
+        window = sg.Window('DomoHouse: Your App', size=(480, 320)).Layout(layout_agregar)
 
     # Cada que se presione el boton de "Tomar Foto" se capturan 10 fotos del usuario
     if event == 'TomarFoto':
@@ -261,7 +262,7 @@ while True:
     # Boton para eliminar el usuario de acuerdo a los archivos guardados
     if event == 'EliminarUsuario':
         window.Close()
-        window = sg.Window('DomoHouse: Your App', size=(480, 320), no_titlebar=True).Layout(layout_eliminar)
+        window = sg.Window('DomoHouse: Your App', size=(480, 320)).Layout(layout_eliminar)
 
     if event == 'Eliminar':
         firstName = window.FindElement('photoFirstName').Get()
