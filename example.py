@@ -1,3 +1,3 @@
-from photo_commands import *
+from control_commands import *
 
-takeSnapshotAndSave(1)
+

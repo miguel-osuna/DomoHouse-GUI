@@ -38,7 +38,6 @@ void setup()
     mfrc522.PCD_Init();
     Serial.println("Approximate your card to the reader...");
     Serial.println();
-    
 }
 
 void loop()
@@ -79,6 +78,7 @@ void loop()
     else
     {
         Serial.println("Access denied");
+        Serial.println();
         delay(3000);
     }
 }
