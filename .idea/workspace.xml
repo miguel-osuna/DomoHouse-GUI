@@ -22,7 +22,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/example.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="50">
@@ -40,11 +40,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/domohouse_gui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4750">
-              <caret line="192" column="14" selection-start-line="198" selection-end-line="199" />
+            <state relative-caret-position="370">
+              <caret line="275" lean-forward="true" selection-start-line="275" selection-end-line="275" />
+              <caret line="276" column="38" lean-forward="true" selection-start-line="276" selection-start-column="38" selection-end-line="276" selection-end-column="38" />
+              <caret line="277" column="86" selection-start-line="277" selection-start-column="86" selection-end-line="277" selection-end-column="86" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -84,7 +86,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="912" />
     <option name="y" value="28" />
     <option name="width" value="978" />
@@ -289,10 +291,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="730" y="23" width="782" height="831" extended-state="1" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.40348527" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1988111" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -522,16 +523,6 @@
     <entry file="file://$PROJECT_DIR$/snapshot.py" />
     <entry file="file://$PROJECT_DIR$/commands.py" />
     <entry file="file://$PROJECT_DIR$/correlation.py" />
-    <entry file="file://$PROJECT_DIR$/domohouse_gui.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4750">
-          <caret line="192" column="14" selection-start-line="198" selection-end-line="199" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/photo_commands.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1525">
@@ -553,6 +544,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="50">
           <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/domohouse_gui.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="275" lean-forward="true" selection-start-line="275" selection-end-line="275" />
+          <caret line="276" column="38" lean-forward="true" selection-start-line="276" selection-start-column="38" selection-end-line="276" selection-end-column="38" />
+          <caret line="277" column="86" selection-start-line="277" selection-start-column="86" selection-end-line="277" selection-end-column="86" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
