@@ -79,7 +79,11 @@ def applyFilter(images):
             name = "Miguel"
 
         if minimum is umbral_array[i] and i >= 20 and i < 30:
+            name = "Misael"
+        '''
+        if minimum is umbral_array[i] and i >= 30 and i < 40:
             name = "Omar"
+        '''
 
     return name
 
@@ -97,4 +101,3 @@ def deleteAllPhotos(firstName, lastName):
             photoDetected = False
 
     return photoDetected
-
