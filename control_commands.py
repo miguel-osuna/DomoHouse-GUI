@@ -6,126 +6,91 @@ def connect_bt():
     port = 1
     sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
     sock.connect((bd_addr, port))
-    return None
+    return sock
 
 
-def disconnect_bt():
+def disconnect_bt(sock):
     sock.close
     return None
 
 
-def abrir_cochera():
+def abrir_cochera(sock):
     print("Cochera abierta")
-    sock.send(0)
+    sock.send("0")
     return None
 
-
-def cerrar_cochera():
-    print("Cochera cerrada")
-    sock.send(1)
-    return None
-
-
-def prender_cafetera():
+def prender_cafetera(sock):
     print("Cafetera prendida")
-    sock.send(2)
+    sock.send("1")
     return None
 
-
-def apagar_cafetera():
-    print("Cafetera apagada")
-    sock.send(3)
-    return None
-
-
-def prender_estereo():
+def prender_estereo(sock):
     print("Estereo prendido")
-    sock.send(4)
+    sock.send("2")
     return None
 
-
-def apagar_estereo():
-    print("Estero apagado")
-    sock.send(5)
-    return None
-
-
-def prender_tv():
+def prender_tv(sock):
     print("Television prendida")
-    sock.send(6)
+    sock.send("3")
     return None
 
-
-def apagar_tv():
-    print("Television apagada")
-    sock.send(7)
-    return None
-
-
-def prender_luz_sala():
+def prender_luz_sala(sock):
     print("Luz de sala prendida")
-    sock.send(8)
+    sock.send("4")
     return None
 
-
-def apagara_luz_sala():
-    print("Luz de sala apagada")
-    sock.send(9)
-    return None
-
-
-def prender_luz_cuarto():
+def prender_luz_cuarto(sock):
     print("Luz de cuarto prendida")
-    sock.send(10)
+    sock.send("5")
+    return None
+
+def apaga_todo(sock):
+    print("Todo apagado")
+    sock.send("6")
+    return None
+
+'''def inicia_sesion(sock):
+    print("Inicia sesion")
+   '''
+
+def cierra_sesion(sock):
+    print("Cierra sesion")
+    sock.send("6")
+    sock.send("7")
     return None
 
 
-def apagar_luz_cuarto():
-    print("Luz de cuarto apagada")
-    sock.send(11)
-    return None
-
-
-def apaga_todo():
-    apagar_luz_cuarto()
-    apagar_luz_sala()
-    apagar_tv()
-    apagar_estereo()
-    apagar_cafetera()
-    apagar_cochera()
-    return None
-
-
-def userCarlos():
+def userCarlos(sock):
     print("Carlos")
-    # abrir_cochera()
-    # prender_cafetera()
-    # prender_estereo()
+    abrir_cochera(sock)
+    prender_cafetera(sock)
+    prender_estereo(sock)
     return None
 
 
-def userMiguel():
+def userMiguel(sock):
     print("Miguel")
-    # prender_luz_cuarto()
-    # prender_luz_sala()
-    # prender_tv()
+    prender_luz_cuarto(sock)
+    prender_luz_sala(sock)
+    prender_tv(sock)
     return None
 
 
-def userMisael():
+def userMisael(sock):
     print("Misael")
-    # abrir_cochera()
-    # prender_luz_cuarto()
-    # prender_estereo()
+    abrir_cochera(sock)
+    prender_luz_cuarto(sock)
+    prender_estereo(sock)
     return None
 
 
-def userOptions(firstName):
+def userOptions(firstName, sock):
     if firstName is "Carlos":
-        userCarlos()
+        userCarlos(sock)
     elif firstName is "Miguel":
-        userMiguel()
+        userMiguel(sock)
     elif firstName is "Misael":
-        userMisael()
+        userMisael(sock)
     else:
         print("Usuario Invalido")
+    return None

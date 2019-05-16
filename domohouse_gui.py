@@ -20,6 +20,7 @@ menuDisplayed = False
 cntr = 0
 name = ''
 photoNum = 1
+sock = connect_bt()
 
 # Definiendo los layouts de la GUI
 layout_inicio = [[sg.Image(filename=image_logo, size=(80, 80)),
@@ -118,8 +119,6 @@ layout_eliminar = [[sg.Image(filename=image_logo, size=(80, 80)),
                    ]
 
 
-
-
 # Ventana de inicializacion
 window = sg.Window('Welcome to DomoHouse', size=(480, 320), no_titlebar=True).Layout(layout_inicio)
 
@@ -157,7 +156,6 @@ while True:
         if sg.PopupYesNo('¿Desea escanear la tarjeta?', text_color="white", font=('Roboto', 20),
                          button_color=('#4c85e0', '#FFFFFF'), keep_on_top=True, no_titlebar=True) == 'Yes':
             # Confirmar Tag ID
-
             # Agregar algoritmo de comparacion
 
             # Crear una funcion de comparacion
@@ -191,13 +189,13 @@ while True:
             sg.Popup('Sistema apagado', text_color="white", font=('Roboto', 20), button_color=('#4c85e0', '#FFFFFF'),
                      keep_on_top=True, no_titlebar=True)
             print("Turn off everything")
-            # apaga_todo()
+            cierra_sesion(sock)
 
         if cntr % 2 != 0:
             sg.Popup('Sistema encendido', text_color="white", font=('Roboto', 20), button_color=('#4c85e0', '#FFFFFF'),
                      keep_on_top=True, no_titlebar=True)
             print("Turn on everything")
-            userOptions(name)
+            userOptions(name, sock)
 
     if event == 'Finalizar':
         # Devuelve el valor de las variables a su estado original
@@ -206,13 +204,12 @@ while True:
         menuDisplayed = False
         name = 'Somebody'
         photoNum = 1
+        cntr = 0
         window.Close()
         window = sg.Window('Welcome to DomoHouse', size=(480, 320), no_titlebar=True).Layout(layout_inicio)
 
         # Para asegurar de apagar el equipo por completo, se apaga al momento de finalizar la sesion
-        if cntr % 2 != 0:
-            # apaga_todo()
-            cnt = 0
+        cierra_sesion(sock)
 
     if event == 'Agregar':
         window.Close()
@@ -272,7 +269,7 @@ while True:
                          button_color=('#4c85e0', '#FFFFFF'), keep_on_top=True, no_titlebar=True) == 'Yes':
 
             # Funcion para borrar todas las imagenes de la carpeta
-            photosDetected = deleteAllPhothos(firstName, lastName)
+            photosDetected = deleteAllPhotos(firstName, lastName)
 
             if photosDetected is True:
                 sg.Popup('Imágenes eliminadas', text_color="white", font=('Roboto', 20),

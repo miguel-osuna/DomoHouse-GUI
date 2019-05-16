@@ -48,7 +48,7 @@ def showImages(images):
     return None
 
 def applyFilter(images):
-    name = "User"
+    name = "Miguel"
     kernel = np.array([[1, 1, 1], [1, 2, 1], [1, 1, 1]])
     diffo = cv2.filter2D(images[-1], -1, kernel)
 
