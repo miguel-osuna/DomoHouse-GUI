@@ -48,7 +48,7 @@ def showImages(images):
     return None
 
 def applyFilter(images):
-    name = "Miguel"
+    name = ""
     kernel = np.array([[1, 1, 1], [1, 2, 1], [1, 1, 1]])
     diffo = cv2.filter2D(images[-1], -1, kernel)
 
@@ -80,10 +80,6 @@ def applyFilter(images):
 
         if minimum is umbral_array[i] and i >= 20 and i < 30:
             name = "Misael"
-        '''
-        if minimum is umbral_array[i] and i >= 30 and i < 40:
-            name = "Omar"
-        '''
 
     return name
 

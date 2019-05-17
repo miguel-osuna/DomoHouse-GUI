@@ -20,7 +20,7 @@ menuDisplayed = False
 cntr = 0
 name = ''
 photoNum = 1
-sock = connect_bt()
+# sock = connect_bt()
 
 # Definiendo los layouts de la GUI
 layout_inicio = [[sg.Image(filename=image_logo, size=(80, 80)),
@@ -156,9 +156,14 @@ while True:
         if sg.PopupYesNo('¿Desea escanear la tarjeta?', text_color="white", font=('Roboto', 20),
                          button_color=('#4c85e0', '#FFFFFF'), keep_on_top=True, no_titlebar=True) == 'Yes':
             # Confirmar Tag ID
-            # Agregar algoritmo de comparacion
+            # Se manda comando para la lectura del ID en Arduino
+            '''inicia_sesion(sock)'''
 
-            # Crear una funcion de comparacion
+            # Se revisa la confirmacion de ID
+            '''if id_confirmado(sock):
+                window.FindElement('TagConfirmed').Update('Tag ID verificado')
+                tagConfirmed = True
+            '''
 
             window.FindElement('TagConfirmed').Update('Tag ID verificado')
             tagConfirmed = True
@@ -189,7 +194,7 @@ while True:
             sg.Popup('Sistema apagado', text_color="white", font=('Roboto', 20), button_color=('#4c85e0', '#FFFFFF'),
                      keep_on_top=True, no_titlebar=True)
             print("Turn off everything")
-            cierra_sesion(sock)
+            apaga_todo(sock)
 
         if cntr % 2 != 0:
             sg.Popup('Sistema encendido', text_color="white", font=('Roboto', 20), button_color=('#4c85e0', '#FFFFFF'),

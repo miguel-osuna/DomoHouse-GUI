@@ -10,6 +10,7 @@ int pinLuzSala = 4;
 int pinLuzCuarto = 5;
 byte data;
 bool access = false;
+bool login = false;
 
 int pinBoton = 2; 
 int pinRFID_is_read = A0;
@@ -41,7 +42,18 @@ void setup(){
 
 void loop()
 {
-    if(!access)
+    // Wait for the user to Press the Tag ID Button
+    if(!login)
+    {
+        if(Serial.available()>0)
+        {  
+            if(Serial.read() == '8')
+                login = true;
+        }
+    }
+
+    
+    if(!access && login)
     {
         // Look for a new card
         if(!mfrc522.PICC_IsNewCardPresent())
@@ -56,7 +68,7 @@ void loop()
         String content = "";
         byte letter;
     
-        afor(byte i = 0; i < mfrc522.uid.size; i++)
+        for(byte i = 0; i < mfrc522.uid.size; i++)
         {
             content.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " "));
             content.concat(String(mfrc522.uid.uidByte[i], HEX));
@@ -67,18 +79,21 @@ void loop()
         // Change here the UID of the card/keychain that you want to give access
         if(content.substring(1) == "D0 BD 68 25")
         {  
+            // We send a confirmation value to the user if the ID Card is correct
+            Serial.write("1");
             access = true;
             digitalWrite(A0, HIGH);      
         }
       
         else
         {   
+            Serial.write("0");
             access = false;
             digitalWrite(A0, LOW);
         }
     }
   
-    if(access)
+    if(access && login)
     {
         if(Serial.available()>0)
         {  
@@ -113,7 +128,7 @@ void loop()
                   break;
                 case '7':
                   access = false;
-                  
+                  login = false;
             }
         }
     }

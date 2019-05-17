@@ -1,18 +1,15 @@
-import bluetooth
-
+from bluetooth import *
 
 def connect_bt():
     bd_addr = "73:37:13:04:16:22"
     port = 1
-    sock = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
+    sock = BluetoothSocket(RFCOMM)
     sock.connect((bd_addr, port))
     return sock
 
-
 def disconnect_bt(sock):
-    sock.close
+    sock.close()
     return None
-
 
 def abrir_cochera(sock):
     print("Cochera abierta")
@@ -49,16 +46,34 @@ def apaga_todo(sock):
     sock.send("6")
     return None
 
-'''def inicia_sesion(sock):
-    print("Inicia sesion")
-   '''
-
 def cierra_sesion(sock):
     print("Cierra sesion")
     sock.send("6")
     sock.send("7")
     return None
 
+def inicia_sesion(sock):
+    print("Inicia sesion")
+    sock.send("8")
+
+def id_confirmado(sock):
+    bd_addr = "73:37:13:04:16:22"
+    port = 1
+    sock.bind(bd_addr, port)
+    sock.listen(1)
+
+    client_socket, address = sock.accept()
+    data = sock.recv(1024)
+
+    print(data)
+
+    client_socket.close()
+    sock.close()
+
+    if data == '1':
+        return True
+    elif data == '0':
+        return False
 
 def userCarlos(sock):
     print("Carlos")
@@ -67,7 +82,6 @@ def userCarlos(sock):
     prender_estereo(sock)
     return None
 
-
 def userMiguel(sock):
     print("Miguel")
     prender_luz_cuarto(sock)
@@ -75,14 +89,12 @@ def userMiguel(sock):
     prender_tv(sock)
     return None
 
-
 def userMisael(sock):
     print("Misael")
     abrir_cochera(sock)
     prender_luz_cuarto(sock)
     prender_estereo(sock)
     return None
-
 
 def userOptions(firstName, sock):
     if firstName is "Carlos":
