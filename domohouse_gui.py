@@ -20,7 +20,7 @@ menuDisplayed = False
 cntr = 0
 name = ''
 photoNum = 1
-# sock = connect_bt()
+sock = connect_bt()
 
 # Definiendo los layouts de la GUI
 layout_inicio = [[sg.Image(filename=image_logo, size=(80, 80)),
@@ -157,13 +157,8 @@ while True:
                          button_color=('#4c85e0', '#FFFFFF'), keep_on_top=True, no_titlebar=True) == 'Yes':
             # Confirmar Tag ID
             # Se manda comando para la lectura del ID en Arduino
-            '''inicia_sesion(sock)'''
 
             # Se revisa la confirmacion de ID
-            '''if id_confirmado(sock):
-                window.FindElement('TagConfirmed').Update('Tag ID verificado')
-                tagConfirmed = True
-            '''
 
             window.FindElement('TagConfirmed').Update('Tag ID verificado')
             tagConfirmed = True

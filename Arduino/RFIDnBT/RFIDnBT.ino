@@ -10,7 +10,6 @@ int pinLuzSala = 4;
 int pinLuzCuarto = 5;
 byte data;
 bool access = false;
-bool login = false;
 
 int pinBoton = 2; 
 int pinRFID_is_read = A0;
@@ -42,18 +41,8 @@ void setup(){
 
 void loop()
 {
-    // Wait for the user to Press the Tag ID Button
-    if(!login)
-    {
-        if(Serial.available()>0)
-        {  
-            if(Serial.read() == '8')
-                login = true;
-        }
-    }
-
-    
-    if(!access && login)
+ 
+    if(!access)
     {
         // Look for a new card
         if(!mfrc522.PICC_IsNewCardPresent())
@@ -93,7 +82,7 @@ void loop()
         }
     }
   
-    if(access && login)
+    if(access)
     {
         if(Serial.available()>0)
         {  
@@ -129,6 +118,7 @@ void loop()
                 case '7':
                   access = false;
                   login = false;
+                  content = "";
             }
         }
     }

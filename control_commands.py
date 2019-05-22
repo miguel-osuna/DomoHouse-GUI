@@ -52,29 +52,6 @@ def cierra_sesion(sock):
     sock.send("7")
     return None
 
-def inicia_sesion(sock):
-    print("Inicia sesion")
-    sock.send("8")
-
-def id_confirmado(sock):
-    bd_addr = "73:37:13:04:16:22"
-    port = 1
-    sock.bind(bd_addr, port)
-    sock.listen(1)
-
-    client_socket, address = sock.accept()
-    data = sock.recv(1024)
-
-    print(data)
-
-    client_socket.close()
-    sock.close()
-
-    if data == '1':
-        return True
-    elif data == '0':
-        return False
-
 def userCarlos(sock):
     print("Carlos")
     abrir_cochera(sock)
@@ -87,6 +64,9 @@ def userMiguel(sock):
     prender_luz_cuarto(sock)
     prender_luz_sala(sock)
     prender_tv(sock)
+    abrir_cochera(sock)
+    prender_estereo(sock)
+    prender_cafetera(sock)
     return None
 
 def userMisael(sock):
