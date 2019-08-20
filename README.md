@@ -25,7 +25,7 @@ A facial recognition system was implemented in order to automate different actio
 
 ## **Block Diagram**
 <p align="center>
-  <img src= captures/block_diagram.png>
+  <img src= captures/block_diagram.png width=640
 </p>
 
 ## **Project Description**
@@ -47,7 +47,7 @@ The Arduino code is run on the Microcontroller, and through a Bluetooth module i
 This login window simply displays the login window, which is used to access the system.
 
 <p align="center>
-  <img src= captures/inicio.png>
+  <img src= captures/inicio.png width=640>
 </p>
 
 ### Login Layout
@@ -59,13 +59,13 @@ The second of the forms of identification is through a unique identification car
 This is only included as a way to strengthen the security system for the user.
 
 <p align="center>
-  <img src= captures/inicia_sesion.png>
+  <img src= captures/inicia_sesion.png width=640
 </p>
 
 When the two security phases are verified, a window of type 'pop-up' will be displayed that will confirm access to the user through a message that includes his / her name, for example:
 
 <p align="center>
-  <img src= captures/popup_amo.png>
+  <img src= captures/popup_amo.png width=640
 </p>
 
 ### Menu Layout
@@ -79,7 +79,7 @@ There are four buttons to be operated according to the user's decisions.
 - The fourth is the Delete User button
 
 <p align="center>
-  <img src= captures/menu.png>
+  <img src= captures/menu.png width=640
 </p>
 
 ### Add Layout
@@ -90,7 +90,7 @@ The first user's name is the first element
 In total, there are 10 different samples per user. With these samples, the capture of the photo taken by the “Face ID” identifier can be compared. This way you have greater accuracy of the results.
 
 <p align="center>
-  <img src= captures/add.png>
+  <img src= captures/add.png width=640
 </p>
 
 ### Delete Layout
@@ -99,8 +99,5 @@ When we no longer want to have a user's record, we simply delete the images we h
 In the same way, the initials of the name and surname are taken to look for the name of the image inside the folder, alternating only the number to find it.
 
 <p align="center>
-  <img src= captures/remove.png>
+  <img src= captures/remove.PNG width=640
 </p>
-
-
-
