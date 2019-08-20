@@ -24,7 +24,9 @@ A facial recognition system was implemented in order to automate different actio
   - PySimpleGUI
 
 ## **Block Diagram**
-
+<p align="center>
+  <img src= captures/block_diagram.png>
+</p>
 
 ## **Project Description**
 A graphical user interface was developed, as well as the image processing part with Python. As samples you have a database consisting of images.
@@ -39,8 +41,66 @@ With Arduino, the microcontroller was programmed for the conditioning of the dif
 
 The Arduino code is run on the Microcontroller, and through a Bluetooth module it is connected to the Raspberry Pi 3b +, where the Python program runs.
 
-
-
-
 ## **GUI Design**
+
+### Startup Layout
+This login window simply displays the login window, which is used to access the system.
+
+<p align="center>
+  <img src= captures/inicio.png>
+</p>
+
+### Login Layout
+The login window has different elements that allow the user to confirm their identity in two different ways.
+
+The first of these is the confirmation of identification through the user's face. For this, the user will previously have to create a small database of 10 images to have them as references.
+
+The second of the forms of identification is through a unique identification card that the user must always carry.
+This is only included as a way to strengthen the security system for the user.
+
+<p align="center>
+  <img src= captures/inicia_sesion.png>
+</p>
+
+When the two security phases are verified, a window of type 'pop-up' will be displayed that will confirm access to the user through a message that includes his / her name, for example:
+
+<p align="center>
+  <img src= captures/popup_amo.png>
+</p>
+
+### Menu Layout
+The main menu is where all the magic happens, when we access it, we can realize we receive a warm greeting from the graphical user interface, this is displayed in the text window with “Welcome, my master, choose your option".
+
+There are four buttons to be operated according to the user's decisions.
+
+- The first of these is the On / Off button
+- The second is the Add User button
+- The third is the End Session button
+- The fourth is the Delete User button
+
+<p align="center>
+  <img src= captures/menu.png>
+</p>
+
+### Add Layout
+In the tab to add a new user, we find several elements to generate the new record.
+
+The first user's name is the first element
+
+In total, there are 10 different samples per user. With these samples, the capture of the photo taken by the “Face ID” identifier can be compared. This way you have greater accuracy of the results.
+
+<p align="center>
+  <img src= captures/add.png>
+</p>
+
+### Delete Layout
+When we no longer want to have a user's record, we simply delete the images we have available in the folder.
+
+In the same way, the initials of the name and surname are taken to look for the name of the image inside the folder, alternating only the number to find it.
+
+<p align="center>
+  <img src= captures/remove.png>
+</p>
+
+
 
